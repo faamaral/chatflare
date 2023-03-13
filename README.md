@@ -5,18 +5,18 @@ ChatFlare is a Flutter mobile app project created for learning and practicing mo
 <p>
   <img src="https://img.shields.io/badge/Flutter-3.3.10-blue" alt="Flutter" />
   <img src="https://img.shields.io/badge/Dart-2.18.6-blue" alt="Dart" />
-  <img src="https://img.shields.io/badge/Dev%20Tools-2.15.0-blue" alt="Dev Tools" />
+  <img src="https://img.shields.io/badge/Dart%20Dev%20Tools-2.15.0-blue" alt="Dev Tools" />
   <img src="https://img.shields.io/badge/Firebase-Cloud%20Firestore-orange" alt="Firebase Cloud Firestore" />
   <img src="https://img.shields.io/badge/Firebase-Authentication-orange" alt="Firebase Authentication" />
-  <img src="https://img.shields.io/github/license/faamaral/chatflare" alt="MIT License" />
-  <!-- <img src="https://img.shields.io/github/forks/faamaral/chatflare" alt="Forks" /> -->
+  <img src="https://img.shields.io/github/license/faamaral/chatflare.svg" alt="MIT License" />
+  <!-- <img src="https://img.shields.io/github/forks/faamaral/chatflare.svg" alt="Forks" /> -->
 </p>
 
 ## Technologies Used
 
 - Flutter
 - Dart
-- Flutter Dev Tools
+- Dart Dev Tools
 - Firebase Cloud Firestore
 - Firebase Authentication
 

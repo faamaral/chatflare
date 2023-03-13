@@ -1,3 +1,4 @@
+import 'package:chatflare/pages/auth_page.dart';
 import 'package:chatflare/pages/loading_page.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
         
         primarySwatch: Colors.blue,
       ),
-      home: const LoadingPage(),
+      home: const AuthPage(),
       debugShowCheckedModeBanner: false,
     );
   }
