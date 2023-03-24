@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:chatflare/models/auth_form_data.dart';
+import 'package:chatflare/core/models/auth_form_data.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 
