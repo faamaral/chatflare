@@ -1,10 +1,13 @@
+import 'dart:io';
+
 import 'package:chatflare/models/auth_form_data.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 
-class AuthForm extends StatefulWidget {
+import 'user_image_picker.dart';
 
-  final void Function (AuthFormData) onSubmit;
+class AuthForm extends StatefulWidget {
+  final void Function(AuthFormData) onSubmit;
   const AuthForm({super.key, required this.onSubmit});
 
   @override
@@ -15,10 +18,27 @@ class _AuthFormState extends State<AuthForm> {
   final _formKey = GlobalKey<FormState>();
   final AuthFormData _authFormData = new AuthFormData();
 
+  void handleImagePick(File image) {
+    _authFormData.image = image;
+  }
+
+  void _showError(String msg) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(msg),
+        backgroundColor: Theme.of(context).errorColor,
+      ),
+    );
+  }
+
   void _submit() {
     final bool isValid = _formKey.currentState?.validate() ?? false;
 
     if (!isValid) return;
+
+    if (_authFormData.image == null && _authFormData.isSignup) {
+      return _showError('Imagem não selecionada!');
+    }
     widget.onSubmit(_authFormData);
   }
 
@@ -32,6 +52,10 @@ class _AuthFormState extends State<AuthForm> {
           key: _formKey,
           child: Column(
             children: [
+              if (_authFormData.isSignup)
+                UserImagePicker(
+                  onImagePick: handleImagePick,
+                ),
               if (_authFormData.isSignup)
                 TextFormField(
                   key: const ValueKey('name'),
