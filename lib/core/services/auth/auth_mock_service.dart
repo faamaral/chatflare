@@ -3,16 +3,25 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:chatflare/core/services/auth/auth_service.dart';
+import 'package:chatflare/utils/constants/app_images.dart';
 
 import '../../models/chatflare_user.dart';
 
 class AuthMockService implements AuthService {
-  static Map<String, ChatflareUser> _users = {};
+  static final _defaultUser = ChatflareUser(
+    id: '1',
+    name: 'Teste',
+    email: 'email@example.com',
+    imageUrl: AppImages.avatar,
+  );
+  static Map<String, ChatflareUser> _users = {
+    _defaultUser.email: _defaultUser
+  };
   static ChatflareUser? _currentUser;
   static MultiStreamController<ChatflareUser?>? _controller;
   static final _userStream = Stream<ChatflareUser?>.multi((controller) {
     _controller = controller;
-    _updateUser(null);
+    _updateUser(_defaultUser);
   });
   ChatflareUser? get currentUser => _currentUser;
 
@@ -24,7 +33,7 @@ class AuthMockService implements AuthService {
         id: Random().nextDouble().toString(),
         name: name,
         email: email,
-        imageUrl: image?.path ?? 'assets/');
+        imageUrl: image?.path ?? AppImages.avatar);
 
     _users.putIfAbsent(email, () => newUser);
     _updateUser(newUser);

@@ -3,6 +3,7 @@ import 'package:chatflare/core/services/auth/auth_mock_service.dart';
 import 'package:flutter/material.dart';
 
 import '../components/auth_form.dart';
+import '../core/services/auth/auth_service.dart';
 
 class AuthPage extends StatefulWidget {
   const AuthPage({super.key});
@@ -17,9 +18,9 @@ class _AuthPageState extends State<AuthPage> {
     try {
       setState(() => isLoanding = true);
       if (formData.isLogin) {
-        await AuthMockService().login(formData.email, formData.password);
+        await AuthService().login(formData.email, formData.password);
       } else {
-        await AuthMockService().signup(
+        await AuthService().signup(
             formData.name, formData.email, formData.password, formData.image);
       }
     } on Exception catch (e) {

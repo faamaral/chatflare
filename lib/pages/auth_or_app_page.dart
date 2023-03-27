@@ -5,6 +5,8 @@ import 'package:chatflare/pages/chat_page.dart';
 import 'package:chatflare/pages/loading_page.dart';
 import 'package:flutter/material.dart';
 
+import '../core/services/auth/auth_service.dart';
+
 class AuthOrAppPage extends StatelessWidget {
   const AuthOrAppPage({super.key});
 
@@ -12,7 +14,7 @@ class AuthOrAppPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: StreamBuilder<ChatflareUser?>(
-        stream: AuthMockService().userChanges,
+        stream: AuthService().userChanges,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const LoadingPage();
