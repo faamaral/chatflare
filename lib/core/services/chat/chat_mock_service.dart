@@ -8,15 +8,7 @@ import 'package:chatflare/utils/constants/app_images.dart';
 import '../../models/chatflare_user.dart';
 
 class ChatMockService implements ChatService {
-  static final List<ChatMessage> _msgs = [
-    ChatMessage(
-        id: '1',
-        text: 'Hello',
-        createdAt: DateTime.now(),
-        userId: '2',
-        userName: 'Teste1',
-        userImageUrl: AppImages.avatar),
-  ];
+  static final List<ChatMessage> _msgs = [];
   static MultiStreamController<List<ChatMessage>>? _controller;
   static final _msgsStream = Stream<List<ChatMessage>>.multi((controller) {
     _controller = controller;
@@ -36,7 +28,7 @@ class ChatMockService implements ChatService {
       userImageUrl: user.imageUrl,
     );
     _msgs.add(newMessage);
-    _controller?.add(_msgs);
+    _controller?.add(_msgs.reversed.toList());
     return newMessage;
   }
 }
