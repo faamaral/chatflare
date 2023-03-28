@@ -29,17 +29,24 @@ ChatFlare is a Flutter mobile app project created for learning and practicing mo
 
 ## Screenshots
 
-<!-- Add screenshots here -->
+
+<div style="display:flex; flex-direction: row; justify-content: space-evenly; margin-top: 20px;">
+    <img src="docs/screenshots/login.png" alt="Home Screen" width="180">
+    <img src="docs/screenshots/signup.png" alt="Add Place Screen" width="180">
+    <img src="docs/screenshots/chat.png" alt="Select Locale Screen" width="180">
+    <img src="docs/screenshots/notifications.png" alt="Place Details Screen" width="180">
+</div>
 
 ## Getting Started
 
 To run this app on your machine, follow these steps:
 
-1. Clone this repository to your local machine.
-2. Open the project directory in a code editor.
-3. Run `flutter pub get` to install the project dependencies.
-4. Connect a device or start an emulator.
-5. Run `flutter run` to launch the app on your device or emulator.
+1. Create a Firebase project and add an Android app to it. Add the necessary configuration files to your project.
+2. Clone this repository to your local machine.
+3. Open the project directory in a code editor.
+4. Run `flutter pub get` to install the project dependencies.
+5. Connect a device or start an emulator.
+6. Run `flutter run` to launch the app on your device or emulator.
 
 ## Contributions
 
