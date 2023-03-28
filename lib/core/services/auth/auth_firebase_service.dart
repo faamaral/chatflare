@@ -7,6 +7,7 @@ import 'package:chatflare/utils/constants/app_images.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 import '../../models/chatflare_user.dart';
 
@@ -25,23 +26,39 @@ class AuthFirebaseService implements AuthService {
 
   Stream<ChatflareUser?> get userChanges => _userStream;
 
+  @override
   Future<void> signup(
       String name, String email, String password, File? image) async {
-    final auth = FirebaseAuth.instance;
+    final signup = await Firebase.initializeApp(
+      name: 'userSignup',
+      options: Firebase.app().options,
+    );
+
+    final auth = FirebaseAuth.instanceFor(app: signup);
+
     UserCredential credential = await auth.createUserWithEmailAndPassword(
-        email: email, password: password);
+      email: email,
+      password: password,
+    );
 
-    if (credential == null) return;
+    if (credential.user != null) {
+      // 1. Upload da foto do usuário
+      final imageName = '${credential.user!.uid}.jpg';
+      final imageUrl = await _uploadUserImage(image, imageName);
 
-    // 1. upload da imagem do usuario
-    final imageName = '${credential.user!.uid}.jpg';
-    final imageUrl = await _uploadUserImage(image, imageName);
-    // 2. atualizar atributos do usuario
-    await credential.user?.updateDisplayName(name);
-    await credential.user?.updatePhotoURL(imageUrl);
+      // 2. atualizar os atributos do usuário
+      await credential.user?.updateDisplayName(name);
+      await credential.user?.updatePhotoURL(imageUrl);
 
-    // salvar usuario no bd (opcional)
-    await _saveChatflareUser(_toChatflareUser(credential.user!, imageUrl));
+      // 2.5 fazer o login do usuário
+      await login(email, password);
+
+      // 3. salvar usuário no banco de dados (opcional)
+      _currentUser = _toChatflareUser(credential.user!, name, imageUrl);
+      await _saveChatflareUser(_currentUser!);
+    }
+
+    await signup.delete();
   }
 
   Future<void> login(String email, String password) async {
@@ -71,11 +88,13 @@ class AuthFirebaseService implements AuthService {
     return await imageRef.getDownloadURL();
   }
 
-  static ChatflareUser _toChatflareUser(User user, [String? imageUrl]) {
+  static ChatflareUser _toChatflareUser(User user,
+      [String? name, String? imageUrl]) {
     return ChatflareUser(
-        id: user.uid,
-        name: user.displayName ?? user.email!.split('@')[0],
-        email: user.email!,
-        imageUrl: imageUrl ?? user.photoURL ?? AppImages.avatar);
+      id: user.uid,
+      name: name ?? user.displayName ?? user.email!.split('@')[0],
+      email: user.email!,
+      imageUrl: imageUrl ?? user.photoURL ?? AppImages.avatar,
+    );
   }
 }
