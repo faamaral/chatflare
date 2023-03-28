@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:chatflare/core/models/chatflare_user.dart';
+import 'package:chatflare/core/services/auth/auth_firebase_service.dart';
 import 'package:chatflare/core/services/auth/auth_mock_service.dart';
 
 abstract class AuthService {
@@ -13,6 +14,7 @@ abstract class AuthService {
   Future<void> logout();
 
   factory AuthService() {
-    return AuthMockService();
+    // return AuthMockService();
+    return AuthFirebaseService();
   }
 }

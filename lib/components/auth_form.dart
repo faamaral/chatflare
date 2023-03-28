@@ -34,7 +34,9 @@ class _AuthFormState extends State<AuthForm> {
   void _submit() {
     final bool isValid = _formKey.currentState?.validate() ?? false;
 
-    if (!isValid) return;
+    if (!isValid) {
+      return;
+    }
 
     if (_authFormData.image == null && _authFormData.isSignup) {
       return _showError('Imagem não selecionada!');
